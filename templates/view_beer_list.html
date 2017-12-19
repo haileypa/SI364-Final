@@ -1,0 +1,83 @@
+
+<!DOCTYPE html>
+<html>
+
+{% if current_user.is_authenticated %}
+    <a href="{{ url_for('logout') }}"><font color="FF4447">Sign Out {{current_user.username}}</a>
+{% else %}
+    <a href="{{ url_for('hello_beer_world') }}"><font color="FF4447">Sign In</a>
+{% endif %}
+
+  <br><br>
+   <font color="B2DBD5">{{ current_time.now().strftime("%A, %B %d %H:%M %p") }}<br>
+
+  <a href="{{ url_for('search') }}">
+    <font color="FA8D62">Back to Search!</font>
+  </a>
+
+  <head>
+    <center>
+      <h1><font color="FA8D62">List of Beers!</h1>
+    </center>
+
+  </head>
+  <body bgcolor="2B616D">
+    {% if all_beers %}
+    <center>
+      <table style="width:75%" border=1 bordercolor ="FA8D62">
+          <tr>
+            <th>
+              <h2><font color="B2DBD5">Beer</h2>
+            </th>
+
+            <th>
+              <h2><font color="B2DBD5">ABV</h2>
+            </th>
+
+            <th>
+              <h2><font color="B2DBD5">Description</h2>
+            </th>
+
+            <th>
+              <h2><font color="B2DBD5">Style</h2>
+            </th>
+          </tr>
+
+          {% for beer in all_beers.items %}
+          <tr>
+            <td> <font color="B2DBD5">{{beer.beer_name}} </td>
+            <td> <font color="B2DBD5">{{beer.abv}} </td>
+            <td> <font color="B2DBD5">{{beer.description}} </td>
+            <td> <font color="B2DBD5">{{beer.style}} </td>
+          </tr>
+          {% endfor %}
+          {% if all_beers.has_prev %}
+            <a href="{{ url_for('view_beer_list', page=all_beers.prev_num) }}"><font color="B2DBD5">&lt;&lt; Previous Beers </a> &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+            {% else %}<font color="B2DBD5">&lt;&lt; Previous Beers &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;{% endif %} 
+          {% if all_beers.has_next %}
+            <a href="{{ url_for('view_beer_list', page=all_beers.next_num) }}"><font color="B2DBD5">Next Beers &gt;&gt;</a>
+          {% else %} Next Beers &gt;&gt;{% endif %}
+        </table>
+        </center>
+        <h1>
+          <center>        
+            <a href="{{ url_for('search') }}">
+              <font color="FA8D62">Back to Search!
+            </a><br>
+          </center>
+        </h1>
+      </center>
+      {% else %}
+        <center><h1><font color="FF4447">There are no beers in the database :(</h1></center>
+        <h1>
+          <center>        
+            <a href="{{ url_for('search') }}">
+              <font color="FA8D62">Search for beers instead!
+            </a>
+          </center>
+        </h1>
+      {% endif %}
+    </body>
+  </form>
+
+      
