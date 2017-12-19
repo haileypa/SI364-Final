@@ -40,6 +40,10 @@
               <a href="{{ url_for('my_beer_lists') }}">
                 <font color="FA8D62">View my Beer Lists!
               </a>
+            {% else %}
+              <a href="{{ url_for('view_beer_list') }}">
+                <font color="FA8D62">View Beers in the database!
+              </a>
             {% endif %}
             <center><img src='/static/beer.jpg'></center>
           </form>
@@ -67,6 +71,10 @@
               <a href="{{ url_for('my_brewery_lists') }}">
                 <font color="FA8D62">View my Brewery Lists!
               </a>
+            {% else %}
+              <a href="{{ url_for('view_brewery_list') }}">
+                <font color="FA8D62">View Breweries in the database!
+              </a>
             {% endif %}
             <center><img src='/static/brewery.jpeg'></center>
           </form>
@@ -76,13 +84,4 @@
   </table>
 </body>
 
-<footer>
-  <h2>
-    <center>
-      <a href="{{ url_for('logout') }}">
-        <font color="FA8D62">Back to the Home Page!
-      </a>
-    </center>
-  </h2>
-</footer>
 
