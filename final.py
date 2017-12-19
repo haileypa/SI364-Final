@@ -356,17 +356,20 @@ def beer_info():
 @app.route('/beerlist', methods=['GET', 'POST'])
 def create_beer_list():
 	form = SaveBeerForm()
-	all_beers = [] 
-	beers = Beer.query.all()
-	for beer in beers:
-		all_beers.append((beer.beer_name, beer.abv, beer.description, beer.style, beer.id))
-	all_beers.sort()
+	beers = Beer.query.order_by('beer_name')
 	if request.method == "POST" and form.validate_on_submit():
 		selected_beers = request.form.getlist("beers")
 		beer_objects = [get_beer_by_id(int(id)) for id in selected_beers]
 		get_or_create_beer_collection(db.session, current_user=current_user, name=form.name.data, beer_list=beer_objects)
 		return redirect(url_for('my_beer_lists'))
-	return render_template('beer_list.html', all_beers=all_beers, current_time=datetime.now(), form=form)
+
+	return render_template('beer_list.html', all_beers=beers, current_time=datetime.now(), form=form)
+
+@app.route('/viewbeerlist/', methods=['GET'])
+@app.route('/viewbeerlist/<int:page>', methods=['GET'])
+def view_beer_list(page=1):
+	beers = Beer.query.order_by('beer_name').paginate(page, 5, False)
+	return render_template('view_beer_list.html', all_beers=beers, current_time=datetime.now())
 
 
 @app.route('/mybeerlists', methods= ['POST','GET'])
@@ -439,6 +442,14 @@ def create_brewery_list():
 		get_or_create_brewery_collection(db.session, current_user=current_user, brewery_name=form.name.data, brewery_list=brewery_objects)
 		return redirect(url_for('my_brewery_lists'))
 	return render_template('brewery_list.html', all_breweries=all_breweries, current_time=datetime.now(), form=form)
+
+@app.route('/viewbrewerylist/', methods=['GET'])
+@app.route('/viewbrewerylist/<int:page>', methods=['GET'])
+def view_brewery_list(page=1):
+	breweries = Brewery.query.order_by('brewery_name').paginate(page, 10, False)
+	print(breweries.items)
+	return render_template('view_brewery_list.html', all_breweries=breweries, current_time=datetime.now())
+
 
 @app.route('/mybrewerylists', methods= ['POST','GET'])
 def my_brewery_lists():
