@@ -1,0 +1,110 @@
+
+<!DOCTYPE html>
+<html>
+
+{% if current_user.is_authenticated %}
+    <a href="{{ url_for('logout') }}"><font color="FF4447">Sign Out {{current_user.username}}</a>
+
+  <br><br>
+   <font color="B2DBD5">{{ current_time.now().strftime("%A, %B %d %H:%M %p") }}
+  <br>
+  <a href="{{ url_for('my_brewery_lists') }}">
+    <font color="FA8D62">View my brewery lists!</font>
+  </a><br>
+  <a href="{{ url_for('search') }}">
+    <font color="FA8D62">Back to Search!</font>
+  </a>
+
+  <head>
+    <center>
+      <h1><font color="FA8D62">Create a brewery list!</h1>
+    </center>
+
+  </head>
+  <form method="POST" >
+  <body bgcolor="2B616D">
+    <center>
+      <h2><font color="FF4447">
+          {{form.hidden_tag()}}
+
+          {% if form.name.errors %}
+            {% for error in form.name.errors %}
+              {{error}}
+            {% endfor %}
+          {% endif %}
+        </h2>
+      <h2><font color="B2DBD5">{{form.name.label}}{{form.name()}}</h2><br>
+
+    {% if all_breweries %}
+      <table style="width:75%" border=1 bordercolor ="FA8D62">
+          <tr>
+            <th>
+              <h2><font color="B2DBD5">Brewery</h2>
+            </th>
+
+            <th>
+              <h2><font color="B2DBD5">Website</h2>
+            </th>
+
+            <th>
+              <h2><font color="B2DBD5">Description</h2>
+            </th>
+
+            <th>
+              <h2><font color="B2DBD5">Select</h2>
+            </th>
+          </tr>
+
+          {% for brewery in all_breweries %}
+          <tr>
+            <td> <font color="B2DBD5">{{brewery[0]}} </td>
+            <td> <font color="B2DBD5">{{brewery[1]}} </td>
+            <td> <font color="B2DBD5">{{brewery[2]}} </td>
+            <td>  <center><input type="checkbox" id="id_{{brewery[0]}}" name="breweries" value="{{brewery[3]}}"></center> </td>
+          </tr>
+          {% endfor %}
+        </table>
+
+        <br>{{form.submit()}}
+
+        <h1>
+          <center>        
+            <a href="{{ url_for('search') }}">
+              <font color="FA8D62">Back to Search!
+            </a><br>
+            <a href="{{ url_for('my_brewery_lists') }}">
+              <font color="FA8D62">View my brewery lists!</font>
+            </a>
+          </center>
+        </h1>
+      </center>
+      {% else %}
+        <center><h1><font color="FF4447">There are no breweries in the database :(</h1></center>
+        <h1>
+          <center>        
+            <a href="{{ url_for('search') }}">
+              <font color="FA8D62">Search for breweries instead!
+            </a>
+          </center>
+        </h1>
+      {% endif %}
+    </body>
+  </form>
+{% else %}
+   <head>
+    <center>
+      <h1><font color="FA8D62">You are not currently logged in!</h1>
+    </center>
+    <body bgcolor="2B616D">
+
+  </head>
+  <center>
+    <h2>
+      <a href="{{ url_for('hello_beer_world') }}"><font color="FF4447">Sign In</a><br>
+    </h2>
+    <h2>
+      <a href="{{ url_for('search') }}"><font color="FA8D62">Back to Search!</font></a>
+    </h2>
+  </center>
+{% endif %}
+      

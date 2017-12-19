@@ -1,0 +1,44 @@
+
+<html>
+
+  <body bgcolor="2B616D">
+    <h1>
+      <center>
+        <font color="B2DBD5"> Hello World of Fellow Beer Lovers!
+      </center>
+    </h1>
+
+    {% if get_flashed_messages() %}
+      {% for message in get_flashed_messages() %} 
+        <h1>
+          <center>
+            <font color="FF4447">{{ message }}
+          </center>
+        </h1> <br>
+      {% endfor%}<br>
+    {% endif %}
+
+    <center>
+      <form method = "POST">
+        {{ form.hidden_tag() }}
+         <h2><font color="FA8D62">{{form.username.label}} {{form.username}}</h2>
+         <h2><font color="FA8D62">{{form.password.label}} {{form.password}}</h2><br>
+         <font color="FA8D62">{{form.submit}}
+      </form>
+    </center>
+    <center>
+      <a href="{{ url_for('new_account') }}">
+        <font color="FA8D62">Create a beer drinking alias!</font>
+      </a>
+      <br>
+      <a href="{{ url_for('search') }}">
+        <font color="FA8D62">Search without a beer drinking alias!</font>
+      </a>
+    </center>
+  </body>
+
+  <footer> 
+    <center><img src='/static/beer_bottles.jpg'></center>
+  </footer>
+
+</html>

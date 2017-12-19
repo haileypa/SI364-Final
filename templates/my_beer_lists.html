@@ -1,0 +1,131 @@
+
+<!DOCTYPE html>
+<html>
+
+{% if current_user.is_authenticated %}
+  <a href="{{ url_for('logout') }}"><font color="FF4447">Sign Out {{current_user.username}}</a>
+  <br><br>
+   <font color="B2DBD5">{{ current_time.now().strftime("%A, %B %d %H:%M %p") }}
+  <br>
+  <a href="{{ url_for('create_beer_list') }}">
+    <font color="FA8D62">Create more beer lists!</font>
+  </a><br>
+  <a href="{{ url_for('search') }}">
+    <font color="FA8D62">Back to Search!</font>
+  </a>
+
+  <head>
+    <style>
+    p.uppercase {
+        text-transform: uppercase;
+        border-style: dotted solid;
+        border-color: #B2DBD5
+    }
+    </style>
+    <center>
+      <h1><font color="FA8D62">My Beer Lists!</h1>
+    </center>
+    {% if get_flashed_messages() %}
+      {% for message in get_flashed_messages() %} 
+        <h1>
+          <center>
+            <font color="FF4447">{{ message }}
+          </center>
+        </h1> <br>
+      {% endfor%}<br>
+    {% endif %}
+  </head>
+  <body bgcolor="2B616D">
+    <center>
+    <form method="POST">
+      {% if beers_in_collections %}
+        {% for key in beers_in_collections.keys() %}
+          <center><h1><font color="FA8D62"><p class="uppercase">{{key.name}}</p></h1>
+
+          <table style="width:75%" border=1 bordercolor ="FA8D62">
+            <tr>
+              <th>
+                <h2><font color="B2DBD5">Beer</h2>
+              </th>
+
+              <th>
+                <h2><font color="B2DBD5">ABV</h2>
+              </th>
+
+              <th>
+                <h2><font color="B2DBD5">Description</h2>
+              </th>
+
+              <th>
+                <h2><font color="B2DBD5">Style</h2>
+              </th>
+
+
+            </tr>
+
+            {% for beer in beers_in_collections[key] %}
+             <tr>
+              <td> <font color="B2DBD5">{{beer.beer_name}} </td>
+              <td> <font color="B2DBD5">{{beer.abv}} </td>
+              <td> <font color="B2DBD5">{{beer.description}} </td>
+              <td> <font color="B2DBD5">{{beer.style}} </td>
+            </tr>
+            {% endfor %}
+
+          </table>
+            <td>  
+              <center>
+                <label>
+                  <input type="checkbox" id="id_{{key.name}}" name="lists" value="{{key.id}}">
+                    <font color="B2DBD5">Email this list!
+                </label>
+              </center> 
+            </td>
+            <br><br>
+        {% endfor %}
+          <input type="submit" value="Email Lists!" name="submit" >
+            <h1>
+              <center>
+                <a href="{{ url_for('create_beer_list') }}">
+                  <font color="FA8D62">Create more lists!</font>
+                </a><br>
+                <a href="{{ url_for('search') }}">
+                  <font color="FA8D62">Back to Search!</font>
+                </a>
+              </center>
+            </h1>
+          </center>
+      {% else %}
+          <center><h1><font color="FF4447">You haven't created any lists!</h1></center>
+             <h1>
+                  <center>
+                    <a href="{{ url_for('create_beer_list') }}">
+                      <font color="FA8D62">Create a list!</font>
+                    </a><br>
+                    <a href="{{ url_for('search') }}">
+                      <font color="FA8D62">Back to Search!</font>
+                    </a>
+                  </center>
+                </h1>
+        {% endif %}
+      </body>
+    </form>
+
+
+{% else %}
+   <head>
+    <center>
+      <h1><font color="FA8D62">You are not currently logged in!</h1>
+    </center>
+    <body bgcolor="2B616D">
+
+  </head>
+  <center>
+    <h2>
+      <a href="{{ url_for('hello_beer_world') }}"><font color="FF4447">Sign In</a><br>
+    </h2>
+    <h2>
+      <a href="{{ url_for('search') }}"><font color="FA8D62">Back to Search!</font></a>
+    </h2>
+  </center>
+{% endif %}

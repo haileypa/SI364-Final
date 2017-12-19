@@ -1,0 +1,41 @@
+<head>
+<style>
+p.uppercase {
+    text-transform: uppercase;
+    border-style: dotted solid;
+}
+</style>
+{% for key in beers_in_collections.keys() %}
+
+	<center><h1><p class="uppercase">{{key.name}}</p></h1>
+
+	<table style="width:75%" border=1 bordercolor ="FA8D62">
+		<tr>
+			<th>
+				<h2>Beer</h2>
+			</th>
+
+			<th>
+				<h2>ABV</h2>
+			</th>
+
+			<th>
+				<h2>Description</h2>
+			</th>
+
+			<th>
+				<h2>Style</h2>
+			</th>
+		</tr>
+
+		{% for beer in beers_in_collections[key] %}
+		<tr>
+			<td> {{beer.beer_name}} </td>
+			<td> {{beer.abv}} </td>
+			<td> {{beer.description}} </td>
+			<td> {{beer.style}} </td>
+		</tr>
+		{% endfor %}
+
+	</table>
+{% endfor %}

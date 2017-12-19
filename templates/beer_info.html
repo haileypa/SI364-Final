@@ -1,0 +1,82 @@
+{% if current_user.is_authenticated %}
+    <a href="{{ url_for('logout') }}"><font color="FF4447">Sign Out {{current_user.username}}</a>
+{% else %}
+    <a href="{{ url_for('hello_beer_world') }}"><font color="FF4447">Sign In</a>
+{% endif %}
+<br><br>
+<body bgcolor="2B616D">
+
+	<font color="B2DBD5">{{ current_time.now().strftime("%A, %B %d %H:%M %p") }}
+
+	{% if get_flashed_messages() %}
+
+		{% for message in get_flashed_messages() %} 
+			<h1>
+				<center>
+					<font color="FF4447">{{ message }}
+				</center>
+			</h1> <br>
+		{% endfor%}<br>
+
+	{% endif %}
+	<ul>
+	    {% if data != 'NULL' %}
+
+	    	{% for r in data[:1] %}
+	        	<h1><font color="FA8D62"> {{ r['name'] }} </h1>
+		        <div> 
+		        	{% if r['abv'] %}
+		        		<h3><font color="FFFFFF"> ABV: <font color="B2DBD5">{{ r['abv'] }} </h3>
+		        	{% endif %}
+
+		        	{% if r['servingTemperatureDisplay'] %}
+		        		<h3><font color="FFFFFF"> Serving Temperature: <font color="B2DBD5">{{r['servingTemperatureDisplay']}} </h3>
+		        	{% endif %}
+
+		        	{% if r['description'] %}
+		        		<h2><font color="FFFFFF"> Description: <font color="B2DBD5">{{ r['description'] }}"</h2>
+		        	{% endif %}
+
+		        	{% if r['style']['name'] and r['style']['description'] %}
+		        		<h3><font color="FFFFFF"><i>Style: <font color="B2DBD5">{{r['style']['name']}} - {{r['style']['description']}} </i></h3>
+		        	{% endif %}
+
+		        </div>
+
+		    {% endfor %}
+
+		{% else %}
+
+			{% if current_user.is_authenticated %}
+				{% if current_time.now().time() < today5pm %}
+					<h2><font color="B2DBD5"> {{ current_user.username }}, it's not even 5 o'clock and you typed "{{ name }}". Slow down on the beers and try again! </h2>
+				{% else %}
+					<h2><font color="B2DBD5"> {{ current_user.username }}, it's past 5 o'clock. What are you doing searching for "{{ name }}"? Grab a beer try again! </h2>
+				{% endif %}
+			{% else %}
+				{% if current_time.now().time() < today5pm %}
+					<h2><font color="B2DBD5"> It's not even 5 o'clock and you typed "{{ name }}". Slow down on the beers and try again! </h2>
+				{% else %}
+					<h2><font color="B2DBD5"> It's past 5 o'clock. What are you doing searching for "{{ name }}"? Grab a beer try again! </h2>
+				{% endif %}
+			{% endif %}
+
+	    {% endif %}
+	    <h1>
+	    	<center>    		
+	    		<a href="{{ url_for('search') }}">
+	    			<font color="FA8D62">Search for something else!
+	    		</a><br>
+	    		{% if current_user.is_authenticated %}
+			    	<a href="{{ url_for('create_beer_list') }}">
+						<font color="FA8D62">Create a beer list!</font>
+					</a><br>
+					<a href="{{ url_for('my_beer_lists') }}">
+						<font color="FA8D62">View my beer lists!</font>
+					</a>
+				{% endif %}
+	    	</center>
+	    </h1>
+
+	</ul>
+</body>

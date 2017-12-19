@@ -1,0 +1,88 @@
+{% if current_user.is_authenticated %}
+    <a href="{{ url_for('logout') }}"><font color="FF4447">Sign Out {{current_user.username}}</a>
+{% else %}
+    <a href="{{ url_for('hello_beer_world') }}"><font color="FF4447">Sign In</a>
+{% endif %}
+
+<body bgcolor="2B616D">
+  <center>
+    <h1>
+      <font color="FA8D62">Hello {{ current_user.username }}! Hope you find what you're looking for! 
+    </h1>
+  </center><br>
+
+  {% if get_flashed_messages() %}
+
+    {% for message in get_flashed_messages() %} 
+      <h1>
+        <center>
+          <font color="FF4447">{{ message }}
+        </center>
+      </h1> <br>
+    {% endfor%}<br>
+
+  {% endif %}
+
+  <table style="width:100%">
+    <tr>
+      <th>
+        <center>
+          <form method="POST" action="{{ url_for('beer_info') }}">
+            <h2>{{ beerForm.hidden_tag() }} </h2>
+            <h2><font color="FA8D62">{{ beerForm.beer.label }}</h2><br>
+            {{ beerForm.beer() }}<br><br>
+            {{ beerForm.submit() }} <br><br>
+            {% if current_user.is_authenticated %}
+              <a href="{{ url_for('create_beer_list') }}">
+                <font color="FA8D62">Create Beer Lists!
+              </a>
+              <br>
+              <a href="{{ url_for('my_beer_lists') }}">
+                <font color="FA8D62">View my Beer Lists!
+              </a>
+            {% endif %}
+            <center><img src='/static/beer.jpg'></center>
+          </form>
+        </center>
+      </th>
+
+      <th>
+        <center>
+          <h1><font color="FA8D62">OR</h1>
+        </center>
+      </th>
+
+      <th>
+        <center>
+          <form method="POST" action="{{ url_for('brewery_info') }}">
+            <h2>{{ breweryForm.hidden_tag() }} </h2>
+            <h2><font color="FA8D62">{{ breweryForm.brewery.label }}</h2><br>
+            {{ breweryForm.brewery() }}<br><br>
+            {{ breweryForm.submit() }} <br><br>
+            {% if current_user.is_authenticated %}
+              <a href="{{ url_for('create_brewery_list') }}">
+                <font color="FA8D62">Create Brewery Lists!
+              </a>
+              <br>
+              <a href="{{ url_for('my_brewery_lists') }}">
+                <font color="FA8D62">View my Brewery Lists!
+              </a>
+            {% endif %}
+            <center><img src='/static/brewery.jpeg'></center>
+          </form>
+        </center>
+      </th>
+
+  </table>
+</body>
+
+<footer>
+  <h2>
+    <center>
+      <a href="{{ url_for('logout') }}">
+        <font color="FA8D62">Back to the Home Page!
+      </a>
+    </center>
+  </h2>
+</footer>
+

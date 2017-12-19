@@ -1,0 +1,81 @@
+
+<html>
+
+  <body bgcolor="2B616D">
+    <h1>
+      <center>
+        <font color="B2DBD5"> Create your beer drinking alias!
+      </center>
+    </h1>
+
+    {% if get_flashed_messages() %}
+      {% for message in get_flashed_messages() %} 
+        <h1>
+          <center>
+            <font color="FF4447">{{ message }}
+          </center>
+        </h1> <br>
+      {% endfor%}<br>
+    {% endif %}
+
+    <center>
+        <form method = "POST">
+          <h2>{{ form.hidden_tag() }} </h2>
+          <h2><font color="FF4447">
+            {% if form.username.errors %}
+              {% for error in form.username.errors %}
+                {{error}}
+              {% endfor %}
+            {% endif %}
+          </h2>
+          <h2><font color="FA8D62">{{form.username.label}} {{form.username}} </h2>
+          <h2><font color="FF4447">
+            {% if form.password.errors %}
+              {% for error in form.password.errors %}
+                {{error}}
+              {% endfor %}
+            {% endif %}
+          </h2>
+          <h2><font color="FA8D62">{{form.password.label}} {{form.password}}</h2>
+          <h2><font color="FF4447">
+            {% if form.confirmPassword.errors %}
+              {% for error in form.confirmPassword.errors %}
+                {{error}}
+              {% endfor %}
+            {% endif %}
+          </h2>
+          <h2><font color="FA8D62">{{form.confirmPassword.label}} {{form.confirmPassword}}</h2>
+          <h2><font color="FF4447">
+            {% if form.email.errors %}
+              {% for error in form.email.errors %}
+                {{error}}
+              {% endfor %}
+            {% endif %}
+          </h2>
+          <h2><font color="FA8D62">{{form.email.label}} {{form.email}}</h2>
+          <h2><font color="FF4447">
+            {% if form.age.errors %}
+              {% for error in form.age.errors %}
+                {{error}}
+              {% endfor %}
+            {% endif %}
+          </h2>
+          <h2><font color="FA8D62">{{form.age.label}} {{form.age}} </h2><br>
+          <font color="FA8D62">{{form.submit}}
+        </form>
+      </center>
+  </body>
+
+  <footer>
+    <center>
+      <a href="{{ url_for('hello_beer_world') }}">
+        <font color="FA8D62">Back to the Home Page!</font>
+      </a>
+      <br><font color="FFFFFF">OR</font><br>
+      <a href="{{ url_for('search') }}">
+        <font color="FA8D62">Search without a beer drinking alias!</font>
+      </a>
+    </center>
+  </footer>
+
+</html>
